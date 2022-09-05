@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  vars_files:
+  - vars.yaml
+  tasks:
+    - name: echo the name
+      command: echo {{ name }}
+      register: echo
+    - debug:
+        msg: "{{ echo.stdout }}"

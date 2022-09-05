@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  tasks:
+    - name: echo pass
+      shell: echo buvi
+      register: pass1
+    - debug:
+        msg: "{{ pass1.stdout }}"
+    - name: Set fact
+      set_fact:
+        ANSIBLE_VAULT_PASSWORD_FILE: "{{ pass1.stdout }}"
+    - name: run
+      shell: ansible-playbook prog.yaml
+      register: out
+      environment:
+        ANSIBLE_VAULT_PASSWORD_FILE: "{{ pass1.stdout }}"
+    - debug:
+        msg: "{{ out.stdout }}"
